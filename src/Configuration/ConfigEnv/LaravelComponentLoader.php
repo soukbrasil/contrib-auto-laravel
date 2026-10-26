@@ -22,10 +22,16 @@ final class LaravelComponentLoader implements EnvComponentLoader
     public function load(EnvResolver $env, EnvComponentLoaderRegistry $registry, Context $context): InstrumentationConfiguration
     {
         $disabledInstrumentations = $env->list('OTEL_PHP_DISABLED_INSTRUMENTATIONS');
+        $isInstrumentationEnabled = static function (string $name) use ($disabledInstrumentations): bool {
+            return !$disabledInstrumentations
+                || !in_array('all', $disabledInstrumentations, true)
+                && !in_array($name, $disabledInstrumentations, true);
+        };
 
         return new LaravelConfiguration(
-            enabled: !$disabledInstrumentations || $disabledInstrumentations !== ['all'] && !in_array('laravel', $disabledInstrumentations, true),
+            enabled: $isInstrumentationEnabled('laravel'),
             traceCliEnabled: $env->bool('OTEL_PHP_TRACE_CLI_ENABLED') ?? false,
+            traceCommandEnabled: $isInstrumentationEnabled('laravel-command'),
         );
     }
 

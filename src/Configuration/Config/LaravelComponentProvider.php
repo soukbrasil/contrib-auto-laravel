@@ -21,6 +21,7 @@ class LaravelComponentProvider implements ComponentProvider
      * @param array{
      *     enabled: bool,
      *     trace_cli_enabled: bool,
+     *     trace_command_enabled: bool,
      * } $properties
      * @psalm-suppress LessSpecificImplementedReturnType,MoreSpecificImplementedParamType
      */
@@ -30,6 +31,7 @@ class LaravelComponentProvider implements ComponentProvider
         return new LaravelConfiguration(
             enabled: $properties['enabled'],
             traceCliEnabled: $properties['trace_cli_enabled'],
+            traceCommandEnabled: $properties['trace_command_enabled'],
         );
     }
 
@@ -44,7 +46,8 @@ class LaravelComponentProvider implements ComponentProvider
             ->canBeDisabled()
             ->children()
                 ->booleanNode('trace_cli_enabled')->defaultFalse()->end()
-            ->end() // @phpstan-ignore method.notFound
+                ->booleanNode('trace_command_enabled')->defaultTrue()->end()
+            ->end()
         ;
     }
 }

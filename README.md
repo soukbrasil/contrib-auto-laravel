@@ -23,6 +23,13 @@ The extension can be disabled via [runtime configuration](https://opentelemetry.
 OTEL_PHP_DISABLED_INSTRUMENTATIONS=laravel
 ```
 
+Individual Laravel command spans can be disabled while keeping the rest of the
+Laravel instrumentation enabled:
+
+```shell
+OTEL_PHP_DISABLED_INSTRUMENTATIONS=laravel-command
+```
+
 ## Component owners
 
 * [Chris Lightfoot-Wild](https://github.com/ChrisLightfootWild)

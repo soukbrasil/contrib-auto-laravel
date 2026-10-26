@@ -12,6 +12,7 @@ final class LaravelConfiguration implements InstrumentationConfiguration
     public function __construct(
         public readonly bool $enabled = true,
         public readonly bool $traceCliEnabled = false,
+        public readonly bool $traceCommandEnabled = true,
     ) {
     }
 

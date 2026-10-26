@@ -30,6 +30,10 @@ class Command implements Hook
         HookManagerInterface $hookManager,
         InstrumentationContext $context,
     ): void {
+        if (!$configuration->traceCommandEnabled) {
+            return;
+        }
+
         $this->hookExecute($hookManager, $context->tracerProvider);
     }
 
